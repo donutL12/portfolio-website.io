@@ -6,8 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>portfolio-website</title>
 
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" crossorigin="anonymous"></script>
-    <script type="module" crossorigin src="/portfolio-website.io/assets/index-f2-xF81k.js"></script>
+      <script>
+  window.addEventListener("load", function () {
+    // Wait until jsPDF is available
+    const checkPDF = setInterval(() => {
+      if (window.jspdf || window.jsPDF) {
+        console.log("jsPDF is ready!");
+        clearInterval(checkPDF);
+      }
+    }, 300);
+  });
+</script>
+
+    <script type="module" crossorigin src="/portfolio-website.io/assets/index-5P-6tbOm.js"></script>
     <link rel="stylesheet" crossorigin href="/portfolio-website.io/assets/index-DRkDgYNz.css">
   </head>
   <body>
