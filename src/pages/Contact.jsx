@@ -5,7 +5,6 @@ import { Menu, X, Github, Linkedin, Mail, Send, MapPin, Phone, Clock, ArrowRight
 export default function Contact() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -19,14 +18,9 @@ export default function Contact() {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
     };
-    const handleMouseMove = (e) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
     window.addEventListener('scroll', handleScroll);
-    window.addEventListener('mousemove', handleMouseMove);
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('mousemove', handleMouseMove);
     };
   }, []);
 
@@ -93,52 +87,9 @@ export default function Contact() {
 
   return (
     <div className="min-h-screen bg-slate-950 text-white relative overflow-hidden">
-      {/* Custom cursor follower */}
-      <div 
-        className="fixed w-6 h-6 rounded-full border-2 border-blue-400/50 pointer-events-none z-50 transition-transform duration-100"
-        style={{ 
-          left: `${mousePosition.x}px`, 
-          top: `${mousePosition.y}px`,
-          transform: 'translate(-50%, -50%)'
-        }}
-      />
-
-      {/* Animated Spaceship */}
-      <div className="fixed pointer-events-none z-40 animate-spaceship-orbit">
-        <div className="relative">
-          <div className="absolute -left-8 top-1/2 -translate-y-1/2 w-16 h-1 bg-gradient-to-l from-blue-400/60 to-transparent blur-sm"></div>
-          <div className="absolute inset-0 blur-lg opacity-70">
-            <div className="w-10 h-10 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full"></div>
-          </div>
-          <svg width="40" height="40" viewBox="0 0 40 40" className="relative drop-shadow-2xl">
-            <path d="M20 5 L30 20 L20 35 L10 20 Z" fill="url(#shipGradient)" stroke="#60a5fa" strokeWidth="1"/>
-            <circle cx="20" cy="20" r="4" fill="#3b82f6" opacity="0.8"/>
-            <circle cx="20" cy="20" r="2" fill="#60a5fa" className="animate-pulse"/>
-            <path d="M10 20 L5 15 L5 25 Z" fill="url(#wingGradient)" stroke="#60a5fa" strokeWidth="0.5"/>
-            <path d="M30 20 L35 15 L35 25 Z" fill="url(#wingGradient)" stroke="#60a5fa" strokeWidth="0.5"/>
-            <circle cx="10" cy="20" r="3" fill="#ec4899" opacity="0.6" className="animate-pulse"/>
-            <defs>
-              <linearGradient id="shipGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#3b82f6" />
-                <stop offset="100%" stopColor="#8b5cf6" />
-              </linearGradient>
-              <linearGradient id="wingGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#6366f1" />
-                <stop offset="100%" stopColor="#a855f7" />
-              </linearGradient>
-            </defs>
-          </svg>
-          <div className="absolute -left-4 top-1/2 -translate-y-1/2 w-2 h-2 bg-blue-400 rounded-full opacity-60 animate-pulse"></div>
-          <div className="absolute -left-6 top-1/2 -translate-y-1/2 w-1 h-1 bg-purple-400 rounded-full opacity-40 animate-pulse" style={{ animationDelay: '0.2s' }}></div>
-        </div>
-      </div>
-
       {/* Enhanced Animated Background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute inset-0 opacity-60">
-          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-blue-600/20 via-purple-600/20 to-pink-600/20 animate-gradient-shift"></div>
-          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-tl from-cyan-500/20 via-blue-500/20 to-purple-500/20 animate-gradient-shift-reverse"></div>
-        </div>
+
         
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-float-slow" />
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-float-medium" />
@@ -178,25 +129,25 @@ export default function Contact() {
               </Link>
             </div>
 
-<div className="hidden md:flex items-center space-x-1">
-  {navItems.map((item) => (
-    <Link 
-      key={item.name}
-      to={item.href} 
-      className="relative px-4 py-2 text-slate-300 hover:text-white transition-colors duration-200 font-medium group"
-    >
-      <span className="relative z-10">{item.name}</span>
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-600/0 to-purple-600/0 group-hover:from-blue-600/20 group-hover:to-purple-600/20 rounded-lg transition-all duration-300 opacity-0 group-hover:opacity-100"></div>
-    </Link>
-  ))}
-  <Link 
-    to="/resume" 
-    className="relative px-4 py-2 text-slate-300 hover:text-white transition-colors duration-200 font-medium group"
-  >
-    <span className="relative z-10">Resume</span>
-    <div className="absolute inset-0 bg-gradient-to-r from-blue-600/0 to-purple-600/0 group-hover:from-blue-600/20 group-hover:to-purple-600/20 rounded-lg transition-all duration-300 opacity-0 group-hover:opacity-100"></div>
-  </Link>
-</div>
+            <div className="hidden md:flex items-center space-x-1">
+              {navItems.map((item) => (
+                <Link 
+                  key={item.name}
+                  to={item.href} 
+                  className="relative px-4 py-2 text-slate-300 hover:text-white transition-colors duration-200 font-medium group"
+                >
+                  <span className="relative z-10">{item.name}</span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-600/0 to-purple-600/0 group-hover:from-blue-600/20 group-hover:to-purple-600/20 rounded-lg transition-all duration-300 opacity-0 group-hover:opacity-100"></div>
+                </Link>
+              ))}
+              <Link 
+                to="/resume" 
+                className="relative px-4 py-2 text-slate-300 hover:text-white transition-colors duration-200 font-medium group"
+              >
+                <span className="relative z-10">Resume</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-600/0 to-purple-600/0 group-hover:from-blue-600/20 group-hover:to-purple-600/20 rounded-lg transition-all duration-300 opacity-0 group-hover:opacity-100"></div>
+              </Link>
+            </div>
 
             <div className="md:hidden">
               <button
@@ -209,52 +160,52 @@ export default function Contact() {
           </div>
         </div>
 
-{mobileMenuOpen && (
-  <div className="md:hidden bg-slate-900/95 backdrop-blur-xl border-t border-blue-500/20">
-    <div className="px-4 pt-2 pb-4 space-y-2">
-      <Link 
-        to="/" 
-        onClick={() => setMobileMenuOpen(false)}
-        className="relative block px-4 py-3 rounded-lg text-slate-300 hover:text-white transition-all duration-200 border border-transparent hover:border-blue-500/30 group overflow-hidden"
-      >
-        <span className="relative z-10">Home</span>
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/0 to-purple-600/0 group-hover:from-blue-600/20 group-hover:to-purple-600/20 transition-all duration-300"></div>
-      </Link>
-      <Link 
-        to="/about" 
-        onClick={() => setMobileMenuOpen(false)}
-        className="relative block px-4 py-3 rounded-lg text-slate-300 hover:text-white transition-all duration-200 border border-transparent hover:border-blue-500/30 group overflow-hidden"
-      >
-        <span className="relative z-10">About</span>
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/0 to-purple-600/0 group-hover:from-blue-600/20 group-hover:to-purple-600/20 transition-all duration-300"></div>
-      </Link>
-      <Link 
-        to="/projects" 
-        onClick={() => setMobileMenuOpen(false)}
-        className="relative block px-4 py-3 rounded-lg text-slate-300 hover:text-white transition-all duration-200 border border-transparent hover:border-blue-500/30 group overflow-hidden"
-      >
-        <span className="relative z-10">Projects</span>
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/0 to-purple-600/0 group-hover:from-blue-600/20 group-hover:to-purple-600/20 transition-all duration-300"></div>
-      </Link>
-      <Link 
-        to="/contact" 
-        onClick={() => setMobileMenuOpen(false)}
-        className="relative block px-4 py-3 rounded-lg text-slate-300 hover:text-white transition-all duration-200 border border-transparent hover:border-blue-500/30 group overflow-hidden"
-      >
-        <span className="relative z-10">Contact</span>
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/0 to-purple-600/0 group-hover:from-blue-600/20 group-hover:to-purple-600/20 transition-all duration-300"></div>
-      </Link>
-      <Link 
-        to="/resume" 
-        onClick={() => setMobileMenuOpen(false)}
-        className="relative block px-4 py-3 rounded-lg text-slate-300 hover:text-white transition-all duration-200 border border-transparent hover:border-blue-500/30 group overflow-hidden"
-      >
-        <span className="relative z-10">Resume</span>
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/0 to-purple-600/0 group-hover:from-blue-600/20 group-hover:to-purple-600/20 transition-all duration-300"></div>
-      </Link>
-    </div>
-  </div>
-)}
+        {mobileMenuOpen && (
+          <div className="md:hidden bg-slate-900/95 backdrop-blur-xl border-t border-blue-500/20">
+            <div className="px-4 pt-2 pb-4 space-y-2">
+              <Link 
+                to="/" 
+                onClick={() => setMobileMenuOpen(false)}
+                className="relative block px-4 py-3 rounded-lg text-slate-300 hover:text-white transition-all duration-200 border border-transparent hover:border-blue-500/30 group overflow-hidden"
+              >
+                <span className="relative z-10">Home</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-600/0 to-purple-600/0 group-hover:from-blue-600/20 group-hover:to-purple-600/20 transition-all duration-300"></div>
+              </Link>
+              <Link 
+                to="/about" 
+                onClick={() => setMobileMenuOpen(false)}
+                className="relative block px-4 py-3 rounded-lg text-slate-300 hover:text-white transition-all duration-200 border border-transparent hover:border-blue-500/30 group overflow-hidden"
+              >
+                <span className="relative z-10">About</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-600/0 to-purple-600/0 group-hover:from-blue-600/20 group-hover:to-purple-600/20 transition-all duration-300"></div>
+              </Link>
+              <Link 
+                to="/projects" 
+                onClick={() => setMobileMenuOpen(false)}
+                className="relative block px-4 py-3 rounded-lg text-slate-300 hover:text-white transition-all duration-200 border border-transparent hover:border-blue-500/30 group overflow-hidden"
+              >
+                <span className="relative z-10">Projects</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-600/0 to-purple-600/0 group-hover:from-blue-600/20 group-hover:to-purple-600/20 transition-all duration-300"></div>
+              </Link>
+              <Link 
+                to="/contact" 
+                onClick={() => setMobileMenuOpen(false)}
+                className="relative block px-4 py-3 rounded-lg text-slate-300 hover:text-white transition-all duration-200 border border-transparent hover:border-blue-500/30 group overflow-hidden"
+              >
+                <span className="relative z-10">Contact</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-600/0 to-purple-600/0 group-hover:from-blue-600/20 group-hover:to-purple-600/20 transition-all duration-300"></div>
+              </Link>
+              <Link 
+                to="/resume" 
+                onClick={() => setMobileMenuOpen(false)}
+                className="relative block px-4 py-3 rounded-lg text-slate-300 hover:text-white transition-all duration-200 border border-transparent hover:border-blue-500/30 group overflow-hidden"
+              >
+                <span className="relative z-10">Resume</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-600/0 to-purple-600/0 group-hover:from-blue-600/20 group-hover:to-purple-600/20 transition-all duration-300"></div>
+              </Link>
+            </div>
+          </div>
+        )}
       </nav>
 
       {/* Main Content */}

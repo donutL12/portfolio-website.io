@@ -7,7 +7,6 @@ export default function About() {
   const [isVisible, setIsVisible] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     setIsVisible(true);
@@ -15,14 +14,9 @@ export default function About() {
       setScrollY(window.scrollY);
       setScrolled(window.scrollY > 50);
     };
-    const handleMouseMove = (e) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
     window.addEventListener('scroll', handleScroll);
-    window.addEventListener('mousemove', handleMouseMove);
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('mousemove', handleMouseMove);
     };
   }, []);
 
@@ -74,65 +68,9 @@ export default function About() {
 
   return (
     <div className="min-h-screen bg-slate-950 text-white relative overflow-hidden">
-      {/* Custom cursor follower */}
-      <div 
-        className="fixed w-6 h-6 rounded-full border-2 border-blue-400/50 pointer-events-none z-50 transition-transform duration-100"
-        style={{ 
-          left: `${mousePosition.x}px`, 
-          top: `${mousePosition.y}px`,
-          transform: 'translate(-50%, -50%)'
-        }}
-      />
-      
-      {/* Animated Spaceship */}
-      <div className="fixed pointer-events-none z-40 animate-spaceship-orbit">
-        <div className="relative">
-          {/* Spaceship glow trail */}
-          <div className="absolute -left-8 top-1/2 -translate-y-1/2 w-16 h-1 bg-gradient-to-l from-blue-400/60 to-transparent blur-sm"></div>
-          
-          {/* Main glow */}
-          <div className="absolute inset-0 blur-lg opacity-70">
-            <div className="w-10 h-10 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full"></div>
-          </div>
-          
-          {/* Spaceship SVG */}
-          <svg width="40" height="40" viewBox="0 0 40 40" className="relative drop-shadow-2xl">
-            {/* Main body */}
-            <path d="M20 5 L30 20 L20 35 L10 20 Z" fill="url(#shipGradient)" stroke="#60a5fa" strokeWidth="1"/>
-            {/* Cockpit */}
-            <circle cx="20" cy="20" r="4" fill="#3b82f6" opacity="0.8"/>
-            <circle cx="20" cy="20" r="2" fill="#60a5fa" className="animate-pulse"/>
-            {/* Wings */}
-            <path d="M10 20 L5 15 L5 25 Z" fill="url(#wingGradient)" stroke="#60a5fa" strokeWidth="0.5"/>
-            <path d="M30 20 L35 15 L35 25 Z" fill="url(#wingGradient)" stroke="#60a5fa" strokeWidth="0.5"/>
-            {/* Engine glow */}
-            <circle cx="10" cy="20" r="3" fill="#ec4899" opacity="0.6" className="animate-pulse"/>
-            
-            <defs>
-              <linearGradient id="shipGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#3b82f6" />
-                <stop offset="100%" stopColor="#8b5cf6" />
-              </linearGradient>
-              <linearGradient id="wingGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#6366f1" />
-                <stop offset="100%" stopColor="#a855f7" />
-              </linearGradient>
-            </defs>
-          </svg>
-          
-          {/* Particle trail */}
-          <div className="absolute -left-4 top-1/2 -translate-y-1/2 w-2 h-2 bg-blue-400 rounded-full opacity-60 animate-pulse"></div>
-          <div className="absolute -left-6 top-1/2 -translate-y-1/2 w-1 h-1 bg-purple-400 rounded-full opacity-40 animate-pulse" style={{ animationDelay: '0.2s' }}></div>
-        </div>
-      </div>
-
       {/* Enhanced Animated Background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        {/* Animated gradient mesh */}
-        <div className="absolute inset-0 opacity-60">
-          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-blue-600/20 via-purple-600/20 to-pink-600/20 animate-gradient-shift"></div>
-          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-tl from-cyan-500/20 via-blue-500/20 to-purple-500/20 animate-gradient-shift-reverse"></div>
-        </div>
+
         
         {/* Floating orbs with enhanced animations */}
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-float-slow" 
@@ -180,25 +118,25 @@ export default function About() {
               </span>
             </div>
 
- <div className="hidden md:flex items-center space-x-1">
-  {navItems.map((item) => (
-    <Link 
-      key={item.name}
-      to={item.href} 
-      className="relative px-4 py-2 text-slate-300 hover:text-white transition-colors duration-200 font-medium group"
-    >
-      <span className="relative z-10">{item.name}</span>
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-600/0 to-purple-600/0 group-hover:from-blue-600/20 group-hover:to-purple-600/20 rounded-lg transition-all duration-300 opacity-0 group-hover:opacity-100"></div>
-    </Link>
-  ))}
-  <Link 
-    to="/resume" 
-    className="relative px-4 py-2 text-slate-300 hover:text-white transition-colors duration-200 font-medium group"
-  >
-    <span className="relative z-10">Resume</span>
-    <div className="absolute inset-0 bg-gradient-to-r from-blue-600/0 to-purple-600/0 group-hover:from-blue-600/20 group-hover:to-purple-600/20 rounded-lg transition-all duration-300 opacity-0 group-hover:opacity-100"></div>
-  </Link>
-</div>
+            <div className="hidden md:flex items-center space-x-1">
+              {navItems.map((item) => (
+                <Link 
+                  key={item.name}
+                  to={item.href} 
+                  className="relative px-4 py-2 text-slate-300 hover:text-white transition-colors duration-200 font-medium group"
+                >
+                  <span className="relative z-10">{item.name}</span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-600/0 to-purple-600/0 group-hover:from-blue-600/20 group-hover:to-purple-600/20 rounded-lg transition-all duration-300 opacity-0 group-hover:opacity-100"></div>
+                </Link>
+              ))}
+              <Link 
+                to="/resume" 
+                className="relative px-4 py-2 text-slate-300 hover:text-white transition-colors duration-200 font-medium group"
+              >
+                <span className="relative z-10">Resume</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-600/0 to-purple-600/0 group-hover:from-blue-600/20 group-hover:to-purple-600/20 rounded-lg transition-all duration-300 opacity-0 group-hover:opacity-100"></div>
+              </Link>
+            </div>
 
             <div className="md:hidden">
               <button
@@ -212,52 +150,52 @@ export default function About() {
         </div>
 
         {/* Mobile Navigation */}
- {mobileMenuOpen && (
-  <div className="md:hidden bg-slate-900/95 backdrop-blur-xl border-t border-blue-500/20">
-    <div className="px-4 pt-2 pb-4 space-y-2">
-      <Link 
-        to="/" 
-        onClick={() => setMobileMenuOpen(false)}
-        className="relative block px-4 py-3 rounded-lg text-slate-300 hover:text-white transition-all duration-200 border border-transparent hover:border-blue-500/30 group overflow-hidden"
-      >
-        <span className="relative z-10">Home</span>
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/0 to-purple-600/0 group-hover:from-blue-600/20 group-hover:to-purple-600/20 transition-all duration-300"></div>
-      </Link>
-      <Link 
-        to="/about" 
-        onClick={() => setMobileMenuOpen(false)}
-        className="relative block px-4 py-3 rounded-lg text-slate-300 hover:text-white transition-all duration-200 border border-transparent hover:border-blue-500/30 group overflow-hidden"
-      >
-        <span className="relative z-10">About</span>
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/0 to-purple-600/0 group-hover:from-blue-600/20 group-hover:to-purple-600/20 transition-all duration-300"></div>
-      </Link>
-      <Link 
-        to="/projects" 
-        onClick={() => setMobileMenuOpen(false)}
-        className="relative block px-4 py-3 rounded-lg text-slate-300 hover:text-white transition-all duration-200 border border-transparent hover:border-blue-500/30 group overflow-hidden"
-      >
-        <span className="relative z-10">Projects</span>
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/0 to-purple-600/0 group-hover:from-blue-600/20 group-hover:to-purple-600/20 transition-all duration-300"></div>
-      </Link>
-      <Link 
-        to="/contact" 
-        onClick={() => setMobileMenuOpen(false)}
-        className="relative block px-4 py-3 rounded-lg text-slate-300 hover:text-white transition-all duration-200 border border-transparent hover:border-blue-500/30 group overflow-hidden"
-      >
-        <span className="relative z-10">Contact</span>
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/0 to-purple-600/0 group-hover:from-blue-600/20 group-hover:to-purple-600/20 transition-all duration-300"></div>
-      </Link>
-      <Link 
-        to="/resume" 
-        onClick={() => setMobileMenuOpen(false)}
-        className="relative block px-4 py-3 rounded-lg text-slate-300 hover:text-white transition-all duration-200 border border-transparent hover:border-blue-500/30 group overflow-hidden"
-      >
-        <span className="relative z-10">Resume</span>
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/0 to-purple-600/0 group-hover:from-blue-600/20 group-hover:to-purple-600/20 transition-all duration-300"></div>
-      </Link>
-    </div>
-  </div>
-)}
+        {mobileMenuOpen && (
+          <div className="md:hidden bg-slate-900/95 backdrop-blur-xl border-t border-blue-500/20">
+            <div className="px-4 pt-2 pb-4 space-y-2">
+              <Link 
+                to="/" 
+                onClick={() => setMobileMenuOpen(false)}
+                className="relative block px-4 py-3 rounded-lg text-slate-300 hover:text-white transition-all duration-200 border border-transparent hover:border-blue-500/30 group overflow-hidden"
+              >
+                <span className="relative z-10">Home</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-600/0 to-purple-600/0 group-hover:from-blue-600/20 group-hover:to-purple-600/20 transition-all duration-300"></div>
+              </Link>
+              <Link 
+                to="/about" 
+                onClick={() => setMobileMenuOpen(false)}
+                className="relative block px-4 py-3 rounded-lg text-slate-300 hover:text-white transition-all duration-200 border border-transparent hover:border-blue-500/30 group overflow-hidden"
+              >
+                <span className="relative z-10">About</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-600/0 to-purple-600/0 group-hover:from-blue-600/20 group-hover:to-purple-600/20 transition-all duration-300"></div>
+              </Link>
+              <Link 
+                to="/projects" 
+                onClick={() => setMobileMenuOpen(false)}
+                className="relative block px-4 py-3 rounded-lg text-slate-300 hover:text-white transition-all duration-200 border border-transparent hover:border-blue-500/30 group overflow-hidden"
+              >
+                <span className="relative z-10">Projects</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-600/0 to-purple-600/0 group-hover:from-blue-600/20 group-hover:to-purple-600/20 transition-all duration-300"></div>
+              </Link>
+              <Link 
+                to="/contact" 
+                onClick={() => setMobileMenuOpen(false)}
+                className="relative block px-4 py-3 rounded-lg text-slate-300 hover:text-white transition-all duration-200 border border-transparent hover:border-blue-500/30 group overflow-hidden"
+              >
+                <span className="relative z-10">Contact</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-600/0 to-purple-600/0 group-hover:from-blue-600/20 group-hover:to-purple-600/20 transition-all duration-300"></div>
+              </Link>
+              <Link 
+                to="/resume" 
+                onClick={() => setMobileMenuOpen(false)}
+                className="relative block px-4 py-3 rounded-lg text-slate-300 hover:text-white transition-all duration-200 border border-transparent hover:border-blue-500/30 group overflow-hidden"
+              >
+                <span className="relative z-10">Resume</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-600/0 to-purple-600/0 group-hover:from-blue-600/20 group-hover:to-purple-600/20 transition-all duration-300"></div>
+              </Link>
+            </div>
+          </div>
+        )}
       </nav>
 
       {/* Hero Section */}
@@ -294,11 +232,12 @@ export default function About() {
                 <div className="relative group/avatar">
                   <div className="absolute -inset-2 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-2xl blur-xl opacity-75 group-hover/avatar:opacity-100 transition duration-500 animate-pulse-slow"></div>
                   <div className="absolute -inset-1 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 rounded-2xl opacity-50 group-hover/avatar:opacity-75 transition duration-500"></div>
-                  <div className="relative w-40 h-40 sm:w-48 sm:h-48 flex-shrink-0 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 p-1 transform group-hover/avatar:scale-105 transition-transform duration-500">
+                  
+                  <div className="relative w-40 h-40 sm:w-48 sm:h-48 flex-shrink-0 rounded-2xl overflow-hidden bg-gradient-to-br from-blue-500 to-purple-600 p-1 transform group-hover/avatar:scale-105 transition-transform duration-500">
                     <img 
-                      src="/pogi.jpeg" 
+                      src="/portfolio-website.io/pogi.jpeg"  
                       alt="Profile"
-                      className="w-full h-full rounded-2xl object-cover"
+                      className="w-full h-full object-cover rounded-2xl"
                     />
                   </div>
                 </div>
@@ -581,58 +520,6 @@ export default function About() {
           0%, 100% { background-position: 0% 50%; }
           50% { background-position: 100% 50%; }
         }
-         }
-        @keyframes spin-slow {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-        @keyframes ping-slow {
-          0% { transform: scale(1); opacity: 1; }
-          75%, 100% { transform: scale(2); opacity: 0; }
-        }
-        @keyframes ping-slower {
-          0% { transform: scale(1); opacity: 1; }
-          75%, 100% { transform: scale(2.5); opacity: 0; }
-        }
-        @keyframes shimmer {
-          0% { transform: translateX(-100%); }
-          100% { transform: translateX(100%); }
-        }
-        @keyframes slide {
-          0% { transform: translateX(-100%); }
-          100% { transform: translateX(100%); }
-        }
-        @keyframes gradient-xy {
-          0%, 100% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-        }
-        @keyframes spaceship-orbit {
-          0% { 
-            left: 10%; 
-            top: 20%;
-            transform: rotate(0deg);
-          }
-          25% { 
-            left: 80%; 
-            top: 30%;
-            transform: rotate(90deg);
-          }
-          50% { 
-            left: 85%; 
-            top: 70%;
-            transform: rotate(180deg);
-          }
-          75% { 
-            left: 15%; 
-            top: 80%;
-            transform: rotate(270deg);
-          }
-          100% { 
-            left: 10%; 
-            top: 20%;
-            transform: rotate(360deg);
-          }
-        }
         .animate-gradient-shift { animation: gradient-shift 20s ease infinite; }
         .animate-gradient-shift-reverse { animation: gradient-shift-reverse 25s ease infinite; }
         .animate-float-slow { animation: float-slow 8s ease-in-out infinite; }
@@ -640,14 +527,7 @@ export default function About() {
         .animate-float-fast { animation: float-fast 4s ease-in-out infinite; }
         .animate-particle { animation: particle 15s linear infinite; }
         .animate-pulse-slow { animation: pulse-slow 3s ease-in-out infinite; }
-        .animate-spin-slow { animation: spin-slow 8s linear infinite; }
-        .animate-ping-slow { animation: ping-slow 3s cubic-bezier(0, 0, 0.2, 1) infinite; }
-        .animate-ping-slower { animation: ping-slower 4s cubic-bezier(0, 0, 0.2, 1) infinite; }
-        .animate-shimmer { animation: shimmer 2s infinite; }
-        .animate-slide { animation: slide 2s infinite; }
-        .animate-gradient-xy { animation: gradient-xy 3s ease infinite; background-size: 200% 200%; }
-        .animate-gradient { background-size: 200% auto; animation: gradient-xy 3s linear infinite; }
-        .animate-spaceship-orbit { animation: spaceship-orbit 30s linear infinite; }
+        .animate-gradient { background-size: 200% auto; animation: gradient 3s linear infinite; }
         .perspective-1000 { perspective: 1000px; }
         .transform-gpu { transform: translateZ(0); }
       `}</style>

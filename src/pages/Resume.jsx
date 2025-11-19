@@ -1,5 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
+import { jsPDF } from "jspdf";
+import { Link } from 'react-router-dom';
 import { Menu, X, Github, Linkedin, Mail, Download, ArrowLeft, Briefcase, GraduationCap, Award, Code2, Terminal, Database, Palette, ArrowRight, User, Phone, MapPin, Sparkles, Zap } from 'lucide-react';
 
 export default function Resume() {
@@ -7,7 +9,13 @@ export default function Resume() {
   const [isVisible, setIsVisible] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+    const navItems = [
+    { name: 'Home', href: '/' },
+    { name: 'About', href: '/about' },
+    { name: 'Projects', href: '/projects' },
+    { name: 'Contact', href: '/contact' },
+  ];
 
   useEffect(() => {
     setIsVisible(true);
@@ -16,14 +24,9 @@ export default function Resume() {
       setScrollY(window.scrollY);
       setScrolled(window.scrollY > 50);
     };
-    const handleMouseMove = (e) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
     window.addEventListener('scroll', handleScroll);
-    window.addEventListener('mousemove', handleMouseMove);
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('mousemove', handleMouseMove);
     };
   }, []);
 
@@ -34,7 +37,7 @@ export default function Resume() {
     location: "Tuktukan, Guiguinto, Bulacan",
     email: "mustangshilvy09@gmail.com",
     phone: "+639353904343",
-    image: "/pogi.jpeg" 
+      image: "/portfolio-website.io/pogi.jpeg"
   };
 
   const experience = [
@@ -77,278 +80,21 @@ export default function Resume() {
     "Travel"
   ];
 
+
   const handleDownload = () => {
-    const printWindow = window.open('', '_blank');
-    
-    const resumeHTML = `
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <meta charset="UTF-8">
-          <title>Resume - ${profile.name}</title>
-          <style>
-            * { margin: 0; padding: 0; box-sizing: border-box; }
-            body {
-              font-family: Arial, sans-serif;
-              line-height: 1.6;
-              color: #333;
-              background: white;
-            }
-            .container {
-              display: flex;
-              min-height: 100vh;
-            }
-            .sidebar {
-              width: 250px;
-              background: #1a1a1a;
-              color: white;
-              padding: 40px 30px;
-            }
-            .main-content {
-              flex: 1;
-              padding: 40px 50px;
-              background: white;
-            }
-            .profile-img {
-              width: 150px;
-              height: 150px;
-              background: #333;
-              border-radius: 10px;
-              margin: 0 auto 20px;
-              object-fit: cover;
-              display: block;
-            }
-            h1 {
-              font-size: 36px;
-              margin-bottom: 5px;
-              text-transform: uppercase;
-              letter-spacing: 2px;
-            }
-            .subtitle {
-              font-size: 12px;
-              text-transform: uppercase;
-              letter-spacing: 1px;
-              margin-bottom: 30px;
-              color: #666;
-            }
-            .section {
-              margin-bottom: 35px;
-            }
-            h2 {
-              font-size: 18px;
-              text-transform: uppercase;
-              border-bottom: 2px solid #1a1a1a;
-              padding-bottom: 8px;
-              margin-bottom: 15px;
-              letter-spacing: 1px;
-            }
-            .sidebar h2 {
-              border-bottom-color: white;
-              color: white;
-              font-size: 16px;
-            }
-            .about-text {
-              font-size: 13px;
-              line-height: 1.8;
-              color: #ddd;
-              margin-bottom: 20px;
-            }
-            .contact-item {
-              display: flex;
-              align-items: start;
-              margin-bottom: 12px;
-              font-size: 12px;
-              line-height: 1.5;
-            }
-            .contact-icon {
-              margin-right: 10px;
-              margin-top: 2px;
-            }
-            .job, .edu-item {
-              margin-bottom: 25px;
-            }
-            .job-header, .edu-header {
-              margin-bottom: 8px;
-            }
-            .job-title, .degree {
-              font-weight: bold;
-              font-size: 16px;
-              margin-bottom: 3px;
-            }
-            .company, .school {
-              color: #666;
-              font-size: 14px;
-              margin-bottom: 3px;
-            }
-            .period {
-              color: #999;
-              font-size: 12px;
-              font-style: italic;
-            }
-            .description {
-              margin: 8px 0;
-              color: #555;
-              font-size: 14px;
-            }
-            .achievements, .highlights {
-              margin-top: 8px;
-            }
-            .achievements li, .highlights li {
-              margin-left: 20px;
-              margin-bottom: 5px;
-              color: #444;
-              font-size: 13px;
-            }
-            .skills-list {
-              margin-bottom: 20px;
-            }
-            .skill-category-title {
-              font-weight: bold;
-              margin-bottom: 8px;
-              color: white;
-              font-size: 13px;
-            }
-            .skill-items {
-              font-size: 12px;
-              color: #ddd;
-              line-height: 1.8;
-            }
-            .hobbies-list {
-              font-size: 12px;
-              color: #ddd;
-              line-height: 2;
-            }
-            .hobbies-list li {
-              margin-left: 15px;
-              margin-bottom: 5px;
-            }
-            @media print {
-              body { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
-              .no-print { display: none; }
-            }
-          </style>
-        </head>
-        <body>
-          <div class="container">
-            <div class="sidebar">
-              <img src="${profile.image}" alt="${profile.name}" class="profile-img" />
-              
-              <div class="section">
-                <h2>About Me</h2>
-                <p class="about-text">${profile.bio}</p>
-              </div>
-
-              <div class="section">
-                <h2>Contact</h2>
-                <div class="contact-item">
-                  <span class="contact-icon">📞</span>
-                  <span>${profile.phone}</span>
-                </div>
-                <div class="contact-item">
-                  <span class="contact-icon">✉️</span>
-                  <span>${profile.email}</span>
-                </div>
-                <div class="contact-item">
-                  <span class="contact-icon">📍</span>
-                  <span>${profile.location}</span>
-                </div>
-              </div>
-
-              <div class="section">
-                <h2>Technical Skill</h2>
-                ${Object.entries(technicalSkills).map(([category, skills]) => `
-                  <div class="skills-list">
-                    <div class="skill-category-title">${category}</div>
-                    <div class="skill-items">${skills.join(', ')}</div>
-                  </div>
-                `).join('')}
-              </div>
-
-              <div class="section">
-                <h2>Hobbies</h2>
-                <ul class="hobbies-list">
-                  ${hobbies.map(hobby => `<li>${hobby}</li>`).join('')}
-                </ul>
-              </div>
-            </div>
-
-            <div class="main-content">
-              <h1>${profile.name}</h1>
-              <p class="subtitle">${profile.title}</p>
-
-              <div class="section">
-                <h2>Experience</h2>
-                ${experience.map(exp => `
-                  <div class="job">
-                    <div class="job-header">
-                      <div class="job-title">${exp.title}</div>
-                      <div class="company">${exp.company}</div>
-                      <div class="period">${exp.period}</div>
-                    </div>
-                    <p class="description">${exp.description}</p>
-                    <ul class="achievements">
-                      ${exp.achievements.map(achievement => `<li>${achievement}</li>`).join('')}
-                    </ul>
-                  </div>
-                `).join('')}
-              </div>
-
-              <div class="section">
-                <h2>Education</h2>
-                ${education.map(edu => `
-                  <div class="edu-item">
-                    <div class="edu-header">
-                      <div class="degree">${edu.degree}</div>
-                      <div class="school">${edu.school}</div>
-                      <div class="period">${edu.period} • ${edu.gpa}</div>
-                    </div>
-                    <ul class="highlights">
-                      ${edu.highlights.map(highlight => `<li>${highlight}</li>`).join('')}
-                    </ul>
-                  </div>
-                `).join('')}
-              </div>
-            </div>
-          </div>
-
-          <script>
-            window.onload = function() {
-              setTimeout(function() {
-                window.print();
-              }, 250);
-            };
-            
-            window.onafterprint = function() {
-              window.close();
-            };
-          </script>
-        </body>
-      </html>
-    `;
-    
-    printWindow.document.write(resumeHTML);
-    printWindow.document.close();
+    // Create a link element
+    const link = document.createElement('a');
+    link.href = '/portfolio-website.io/resumes.pdf';
+    link.download = 'Ronaldo_Manla_Resume.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
-
   return (
     <div className="min-h-screen bg-slate-950 text-white relative overflow-hidden">
-      {/* Custom cursor follower */}
-      <div 
-        className="fixed w-6 h-6 rounded-full border-2 border-blue-400/50 pointer-events-none z-50 transition-transform duration-100"
-        style={{ 
-          left: `${mousePosition.x}px`, 
-          top: `${mousePosition.y}px`,
-          transform: 'translate(-50%, -50%)'
-        }}
-      />
-
       {/* Enhanced Animated Background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        {/* Animated gradient mesh */}
-        <div className="absolute inset-0 opacity-60">
-          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-blue-600/20 via-purple-600/20 to-pink-600/20 animate-gradient-shift"></div>
-          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-tl from-cyan-500/20 via-blue-500/20 to-purple-500/20 animate-gradient-shift-reverse"></div>
-        </div>
+
         
         {/* Floating orbs */}
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-float-slow" 
@@ -429,7 +175,7 @@ export default function Resume() {
           </div>
         </div>
 
-        {/* Mobile Navigation - FIXED VERSION */}
+        {/* Mobile Navigation */}
 {mobileMenuOpen && (
   <div className="md:hidden bg-slate-900/95 backdrop-blur-xl border-t border-blue-500/20">
     <div className="px-4 pt-2 pb-4 space-y-2">
@@ -508,7 +254,7 @@ export default function Resume() {
               </span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 animate-gradient drop-shadow-2xl">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 ">
               {profile.name}
             </h1>
             <p className="text-lg sm:text-xl text-slate-300 max-w-3xl mx-auto mb-8 drop-shadow-lg">
@@ -770,7 +516,7 @@ export default function Resume() {
       </section>
 
       {/* CTA Section */}
-      <section className="relative py-20 px-4 sm:px-6">
+<section className="relative py-20 px-4 sm:px-6">
         <div className="max-w-4xl mx-auto text-center">
           <div className="relative group perspective-1000">
             <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-3xl blur-2xl opacity-30 group-hover:opacity-50 transition duration-500"></div>
@@ -790,15 +536,15 @@ export default function Resume() {
                   I'm always interested in hearing about new projects and opportunities.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <a
-                    href="/contact"
+                  <Link
+                    to="/contact"
                     className="group relative inline-flex items-center justify-center gap-2 px-8 py-4 overflow-hidden rounded-full font-semibold transition-all duration-300 hover:scale-105"
                   >
                     <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600"></div>
                     <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     <span className="relative z-10 text-white">Get In Touch</span>
                     <ArrowRight className="w-5 h-5 relative z-10 text-white group-hover:translate-x-1 transition-transform" />
-                  </a>
+                  </Link>
                   <button
                     onClick={handleDownload}
                     className="group px-8 py-4 border-2 border-slate-600 rounded-full font-semibold hover:bg-slate-800/50 hover:border-blue-500 transition-all duration-300 flex items-center justify-center gap-2 backdrop-blur-sm hover:scale-105"

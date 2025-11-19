@@ -5,6 +5,19 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>portfolio-website</title>
+
+      <script>
+  window.addEventListener("load", function () {
+    // Wait until jsPDF is available
+    const checkPDF = setInterval(() => {
+      if (window.jspdf || window.jsPDF) {
+        console.log("jsPDF is ready!");
+        clearInterval(checkPDF);
+      }
+    }, 300);
+  });
+</script>
+
   </head>
   <body>
     <div id="root"></div>
